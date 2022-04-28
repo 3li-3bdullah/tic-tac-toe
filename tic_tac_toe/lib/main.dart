@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Tic Tac Toe',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: Colors.pink[600],
+        scaffoldBackgroundColor: Colors.black,
       ),
       home:  const TicTacToe()
     );
