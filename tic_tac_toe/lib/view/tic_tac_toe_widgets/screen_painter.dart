@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/constants.dart';
 
 class ScreenPainter extends CustomPainter {
   ScreenPainter(
-      {required this.gameMarks,
-      required this.winningLine});
+      {required this.gameMarks , required this.winningLine});
   static double? divideSize;
   Map<int, Mark>? gameMarks;
   List<int>? winningLine;
@@ -17,10 +15,6 @@ class ScreenPainter extends CustomPainter {
       ..strokeWidth = stroke_width
       ..color = Colors.white;
     final whiteThickPaint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = double_stroke_width
-      ..color = Colors.white;
-    final yellowThickPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
       ..color = Colors.white;
@@ -44,17 +38,18 @@ class ScreenPainter extends CustomPainter {
         Offset(divideSize! * 2.0 - half_stroke_width, size.height),
         customPaint);
 
+  
     gameMarks!.forEach((index, mark) {
-      switch (mark) {
-        case Mark.O:
-          drawNought(canvas, index, yellowThickPaint);
-          break;
-        case Mark.X:
-          drawCross(canvas, index, whiteThickPaint);
-          break;
-        default:
-          break;
-      }
+    switch (mark) {
+      case Mark.O:
+        drawNought(canvas, index, whiteThickPaint);
+        break;
+      case Mark.X:
+        drawCross(canvas, index, whiteThickPaint);
+        break;
+      default:
+        break;
+    }
     });
     drawWinningLine(canvas, winningLine, winningLinePaint);
   }
@@ -72,7 +67,6 @@ class ScreenPainter extends CustomPainter {
     canvas.drawOval(Rect.fromLTWH(left, top, noughtSize, noughtSize), paint);
   }
 
-  // Logic
   void drawCross(Canvas canvas, int index, Paint paint) {
     double x1, y1;
     double x2, y2;
@@ -89,13 +83,12 @@ class ScreenPainter extends CustomPainter {
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
   }
 
-  drawWinningLine(Canvas canvas, List<int>? winningLine, Paint paint) {
+  drawWinningLine(Canvas canvas, List<int>? winningLine , Paint paint) {
     if (winningLine == null) {
       return;
     }
     double x1 = 0, y1 = 0;
     double x2 = 0, y2 = 0;
-
     int firstIndex = winningLine.first;
     int lastIndex = winningLine.last;
 
