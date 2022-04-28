@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/constants.dart';
 
-
 class TicTacToe extends StatefulWidget {
-   const TicTacToe({Key? key}) : super(key: key);
+  const TicTacToe({Key? key}) : super(key: key);
 
   @override
   State<TicTacToe> createState() => _TicTacToeState();
@@ -11,23 +10,23 @@ class TicTacToe extends StatefulWidget {
 
 class _TicTacToeState extends State<TicTacToe> {
   Mark currentMark = Mark.O;
+  List<int>? winningLine;
+  Map<int, Mark> gameMarks = {};
 
-  Map<int,Mark> gameMarks = {};
-
-  void addMark(double x , double y){
-   double divideSize = ScreenPainter.getDivideSize();
-   bool isAbsent = false;
-   gameMarks.putIfAbsent(
-    (x ~/ divideSize + (y ~/ divideSize) * 3).toInt(),
-    () {
-      isAbsent = true ; return currentMark;
-   }
-   );
-   if(isAbsent) currentMark = currentMark == Mark.O ? Mark.X : Mark.O;
- }
+  void addMark(double x, double y) {
+    double divideSize = ScreenPainter.getDivideSize();
+    bool isAbsent = false;
+    gameMarks.putIfAbsent((x ~/ divideSize + (y ~/ divideSize) * 3).toInt(),
+        () {
+      isAbsent = true;
+      return currentMark;
+    });
+    if (isAbsent) currentMark = currentMark == Mark.O ? Mark.X : Mark.O;
+  }
 
   @override
   Widget build(BuildContext context) {
+    print("Rebuildddddddddddddddddddddddddddddddddd");
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,24 +39,45 @@ class _TicTacToeState extends State<TicTacToe> {
       ),
       body: Center(
           child: GestureDetector(
-                onTapUp: (TapUpDetails details) {
-                  if (gameMarks.length >= 9 ) {
-                    gameMarks = <int, Mark>{};
-                    currentMark = Mark.O;
-                  } else {
-                   addMark(details.localPosition.dx, details.localPosition.dy);
-                  }
-                },
-                child: AspectRatio(
-                  aspectRatio: 1.0,
-                  child: Container(
-                      child: CustomPaint(
-                    painter: ScreenPainter(gameMarks: gameMarks),
-                  )),
-                ),
-              )
-              ),
+        onTapUp: (TapUpDetails details) {
+          setState(() {
+            if (gameMarks.length >= 9 || winningLine != null) {
+              gameMarks = <int, Mark>{};
+              currentMark = Mark.O;
+              winningLine = null;
+            } else {
+              addMark(details.localPosition.dx, details.localPosition.dy);
+              winningLine = getWinningLine();
+            }
+          });
+        },
+        child: AspectRatio(
+          aspectRatio: 1.0,
+          child: Container(
+              child: CustomPaint(
+            painter: ScreenPainter(gameMarks: gameMarks),
+          )),
+        ),
+      )),
     );
+  }
+
+  getWinningLine() {
+    final winningLines = [
+      //Horizontal Lines
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      //Vertical Lines
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      //Diagonal
+      [0, 4, 8],
+      [2, 4, 6],
+    ];
+
+    List<int> winningLineFount;
   }
 }
 
