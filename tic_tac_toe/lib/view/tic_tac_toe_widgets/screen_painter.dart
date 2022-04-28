@@ -18,6 +18,10 @@ class ScreenPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
       ..color = Colors.white;
+      final greyThickPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = double_stroke_width
+      ..color = Colors.grey;
     final winningLinePaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
@@ -45,7 +49,7 @@ class ScreenPainter extends CustomPainter {
         drawNought(canvas, index, whiteThickPaint);
         break;
       case Mark.X:
-        drawCross(canvas, index, whiteThickPaint);
+        drawCross(canvas, index, greyThickPaint);
         break;
       default:
         break;
