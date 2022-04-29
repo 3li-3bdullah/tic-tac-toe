@@ -2,26 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:tic_tac_toe/constants.dart';
 
 class ScreenPainter extends CustomPainter {
-  ScreenPainter(
-      {required this.gameMarks , required this.winningLine});
+  ScreenPainter({required this.gameMarks, required this.winningLine});
+  // Here we declarig variables ^_^
   static double? divideSize;
   Map<int, Mark>? gameMarks;
   List<int>? winningLine;
   @override
   void paint(Canvas canvas, Size size) {
     divideSize = size.width / 3;
+    // With this customPaint we'll draw the vertical and horizontal lines .
     final customPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = stroke_width
       ..color = Colors.white;
+    // I've used this to paint the O mark .
     final whiteThickPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
       ..color = Colors.white;
-      final greyThickPaint = Paint()
+    // I've used this to paint the X mark .
+    final greyThickPaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
       ..color = Colors.grey;
+    // I've used this to paint the winnig line .
     final winningLinePaint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = double_stroke_width
@@ -30,31 +34,32 @@ class ScreenPainter extends CustomPainter {
     //First Horizontal Line --
     canvas.drawLine(Offset(stroke_width, divideSize! - half_stroke_width),
         Offset(size.width, divideSize! - half_stroke_width), customPaint);
-    //First Vertical Line |
-    canvas.drawLine(Offset(divideSize! - half_stroke_width, stroke_width),
-        Offset(divideSize! - half_stroke_width, size.height), customPaint);
     //Second Horizontal Line --
     canvas.drawLine(Offset(stroke_width, divideSize! * 2.0 - half_stroke_width),
         Offset(size.width, divideSize! * 2.0 - half_stroke_width), customPaint);
+    //First Vertical Line |
+    canvas.drawLine(Offset(divideSize! - half_stroke_width, stroke_width),
+        Offset(divideSize! - half_stroke_width, size.height), customPaint);
     //Second vertical Line |
     canvas.drawLine(
         Offset(divideSize! * 2.0 - half_stroke_width, stroke_width),
         Offset(divideSize! * 2.0 - half_stroke_width, size.height),
         customPaint);
-
-  
+    // This for loop to draw where users have clicked and draw O or X .
     gameMarks!.forEach((index, mark) {
-    switch (mark) {
-      case Mark.O:
-        drawNought(canvas, index, whiteThickPaint);
-        break;
-      case Mark.X:
-        drawCross(canvas, index, greyThickPaint);
-        break;
-      default:
-        break;
-    }
+      switch (mark) {
+        case Mark.O:
+          drawCircle(canvas, index, whiteThickPaint);
+          break;
+        case Mark.X:
+          drawCross(canvas, index, greyThickPaint);
+          break;
+        default:
+          break;
+      }
     });
+    // To draw the winning line , and we passed the winning line pait ,
+    //and the winning line to draw where the 3 fields that have the same Mark.
     drawWinningLine(canvas, winningLine, winningLinePaint);
   }
 
@@ -63,14 +68,14 @@ class ScreenPainter extends CustomPainter {
 
   static double getDivideSize() => divideSize!;
 
-  // This methods to paint the circular shape
-  void drawNought(Canvas canvas, int index, Paint paint) {
+  // This methods to draw the circular shape .
+  void drawCircle(Canvas canvas, int index, Paint paint) {
     double left = (index % 3) * divideSize! + double_stroke_width * 2;
     double top = (index ~/ 3) * divideSize! + double_stroke_width * 2;
     double noughtSize = divideSize! - double_stroke_width * 4;
     canvas.drawOval(Rect.fromLTWH(left, top, noughtSize, noughtSize), paint);
   }
-
+  // And this to draw the cross shape .
   void drawCross(Canvas canvas, int index, Paint paint) {
     double x1, y1;
     double x2, y2;
@@ -86,8 +91,8 @@ class ScreenPainter extends CustomPainter {
     y2 = (index ~/ 3 + 1) * divideSize! - double_stroke_width * 2;
     canvas.drawLine(Offset(x1, y1), Offset(x2, y2), paint);
   }
-
-  drawWinningLine(Canvas canvas, List<int>? winningLine , Paint paint) {
+  // To draw the winng line .
+  drawWinningLine(Canvas canvas, List<int>? winningLine, Paint paint) {
     if (winningLine == null) {
       return;
     }
