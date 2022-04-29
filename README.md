@@ -2,10 +2,8 @@
 Tic Tac Toe game
 
 ## Packages I've used :
-<hr>
 lottie: ^1.3.0
 ## Technologies the app demonstrates:
-<hr>
 SatefulWidget as state management
 ##Cooking Recipes Final UI:
 
