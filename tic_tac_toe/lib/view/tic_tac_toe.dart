@@ -12,48 +12,40 @@ class TicTacToe extends StatefulWidget {
 
 // ignore: must_be_immutable
 class _TicTacToeState extends State<TicTacToe> {
+  // Declaring variables .
   Mark currentMark = Mark.O;
   List<int>? winningLine;
   Map<int, Mark> gameMarks = {};
   bool isWinning = false;
 
-  void addMark(double x, double y) {
-    double divideSize = ScreenPainter.getDivideSize();
-    bool isAbsent = false;
-    gameMarks.putIfAbsent((x ~/ divideSize + (y ~/ divideSize) * 3).toInt(),
-        () {
-      isAbsent = true;
-      return currentMark;
-    });
-    if (isAbsent) currentMark = currentMark == Mark.O ? Mark.X : Mark.O;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Tic Tac Toe",
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.grey[900],
+      appBar: AppBar(
+        title: const Text(
+          "Tic Tac Toe",
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        body: Center(
-            child: GestureDetector(
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.grey[900],
+      ),
+      body: Center(
+        child: GestureDetector(
           onTapUp: (TapUpDetails details) {
-            setState(() {
-              if (gameMarks.length >= 9 || winningLine != null) {
-                gameMarks = <int, Mark>{};
-                currentMark = Mark.O;
-                winningLine = null;
-                isWinning = false;
-              } else {
-                addMark(details.localPosition.dx, details.localPosition.dy);
-                winningLine = getWinningLine();
-              }
-            });
+            setState(
+              () {
+                if (gameMarks.length >= 9 || winningLine != null) {
+                  gameMarks = <int, Mark>{};
+                  currentMark = Mark.O;
+                  winningLine = null;
+                  isWinning = false;
+                } else {
+                  addMark(details.localPosition.dx, details.localPosition.dy);
+                  winningLine = getWinningLine();
+                }
+              },
+            );
           },
           child: Stack(
             alignment: Alignment.center,
@@ -72,9 +64,24 @@ class _TicTacToeState extends State<TicTacToe> {
                   : const SizedBox()
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 
+  // All methods .
+  void addMark(double x, double y) {
+    double divideSize = ScreenPainter.getDivideSize();
+    bool isAbsent = false;
+    gameMarks.putIfAbsent((x ~/ divideSize + (y ~/ divideSize) * 3).toInt(),
+        () {
+      isAbsent = true;
+      return currentMark;
+    });
+    if (isAbsent) currentMark = currentMark == Mark.O ? Mark.X : Mark.O;
+  }
+
+  // Here to get where fields they should have the winning line .
   getWinningLine() {
     final winningLines = [
       //Horizontal Lines
