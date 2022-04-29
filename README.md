@@ -2,9 +2,10 @@
 Tic Tac Toe game
 
 ## Packages I've used :
-lottie: ^1.3.0
+- lottie: ^1.3.0
+- animated_splash_screen: ^1.2.0
 ## Technologies the app demonstrates:
-SatefulWidget as state management
+- SatefulWidget as state management
 
 ## Cooking Recipes Final UI:
 
